@@ -7,14 +7,15 @@ import { Signin } from '../models/signin';
 export class SigninService {
   selectedUser: Signin;
   users: Signin[];
-   URL_API = 'http://35.167.62.109/storeutags/security/create_account';
-  
+   
+  URL_API = 'http://35.167.62.109/storeutags/security/create_account';
+  //URL_API = 'https://myblognodejsandangular.herokuapp.com/users';
   constructor(private http: HttpClient) { 
     this.selectedUser = new Signin();
   }
 
   //method POST to new User
-  postUser(User: string){
+  postUser(User: any){
     return this.http.post(this.URL_API, User);
   }
 }

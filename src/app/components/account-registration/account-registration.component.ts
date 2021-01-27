@@ -23,12 +23,13 @@ export class AccountRegistrationComponent implements OnInit {
   password:string;
   password_confirmation:string;
   body:any
-  output:JSON
+  output:any
   @ViewChild('recaptcha', {static: true }) recaptchaElement: ElementRef;
   
 
   repetPassword:String
   regexp = new RegExp('[A-Za-z0-9._%-]+@[A-Za-z0-9._%-]+\\.[a-z]{2,3}');
+  regexppass = new RegExp('^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$');
   constructor(public userService: SigninService, public router: Router) { }
 
   ngOnInit(): void {
@@ -36,6 +37,12 @@ export class AccountRegistrationComponent implements OnInit {
   }
 
   create_user(){
+    // this.output = {
+    //   user_id: 3,
+    //   username:"bob",
+    //   password: "123344",
+    //   email:"test@gmail.com"
+    //   }
     this.body = {
       first_name: this.first_name,
       middle_name: this.middle_name,
@@ -49,16 +56,29 @@ export class AccountRegistrationComponent implements OnInit {
       password: this.password,
       password_confirmation: this.password_confirmation
     }
-    // console.log(this.body);
-   // this.output = JSON.parse(JSON.stringify(this.body))
+    //console.log(this.body);
+   this.output = JSON.parse(JSON.stringify(this.body))
    if (this.password != this.password_confirmation){
     alert("Las contraseñas no son iguales")
    }else if (this.regexp.test(this.email)){
+     if (this.regexppass.test(this.password)){
       this.userService.postUser(JSON.parse(JSON.stringify(this.body)))
+      //this.userService.postUser(JSON.parse(JSON.stringify(this.output)))
       .subscribe(res => {
         console.log(res);
         alert(res)
+        
+      }, err =>{
+        console.log("Este es el error");
+        console.log(err);
+        
+        
       });
+    }else{
+        alert("El formato de la contraseña no es válido")
+      }
+    
+      
     }else{
       alert("El correo de cumple con las condiciones de un formato correcto")
     }
@@ -67,29 +87,29 @@ export class AccountRegistrationComponent implements OnInit {
 
   }
 
-  addUser(form: NgForm){
-    if (this.repetPassword != this.userService.selectedUser.password) {
-      alert('Error las contraseñas no son iguales, no creamos tu usuario 😕')
-      this.router.navigate(['/Signin'])
-    }else if (this.regexp.test(this.userService.selectedUser.email)){
-      this.userService.postUser(form.value)
-      .subscribe(res => {
-        console.log(res);
-        alert(res)
-        let data = JSON.stringify(res);
-        let dataJson = JSON.parse(data);
-        localStorage.setItem('token', dataJson.token);
-      });
-    }else{
-      alert('Error el correo no cumple con las condiciones, no creamos tu usuario 😕')
-      this.router.navigate(['/Signin'])
-    }
+  // addUser(form: NgForm){
+  //   if (this.repetPassword != this.userService.selectedUser.password) {
+  //     alert('Error las contraseñas no son iguales, no creamos tu usuario 😕')
+  //     this.router.navigate(['/Signin'])
+  //   }else if (this.regexp.test(this.userService.selectedUser.email)){
+  //     this.userService.postUser(form.value)
+  //     .subscribe(res => {
+  //       console.log(res);
+  //       alert(res)
+  //       let data = JSON.stringify(res);
+  //       let dataJson = JSON.parse(data);
+  //       localStorage.setItem('token', dataJson.token);
+  //     });
+  //   }else{
+  //     alert('Error el correo no cumple con las condiciones, no creamos tu usuario 😕')
+  //     this.router.navigate(['/Signin'])
+  //   }
    
-  }
-  test(){
-    console.log(this.city);
+  // }
+  // test(){
+  //   console.log(this.city);
     
-  }
+  // }
 
   renderReCaptch() {
     window['grecaptcha'].render(this.recaptchaElement.nativeElement, {
