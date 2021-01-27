@@ -9,10 +9,10 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    AccountRegistrationComponent
-  ],
+  // declarations: [
+  //   AppComponent,
+  //   AccountRegistrationComponent
+  // ],
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
