@@ -54,13 +54,13 @@ export class AccountRegistrationComponent implements OnInit {
     }
  
       if (this.regexp.test(this.email) == false){
-      alert("El correo de cumple con las condiciones de un formato correcto");
+      alert("The mail does not match the format conditions ");
       document.getElementById("email").focus();
       }else if (this.regexpphonenumber.test(this.phone_number)){
-        alert("El número de teléfono debe contener al menos 10 digitos")
+        alert("The phone number must contain at least 10 digits")
         document.getElementById("phone").focus();
       }else if (this.password != this.password_confirmation){
-        alert("Las contraseñas no son iguales");
+        alert("Passwords do not match ");
         document.getElementById("password").focus();
       }else if(this.regexppass.test(this.password) == false || this.regexppass.test(this.password_confirmation) == false){
         console.log(this.password);
@@ -68,10 +68,10 @@ export class AccountRegistrationComponent implements OnInit {
         console.log(this.regexppass.test(this.password));
         
         console.log(this.regexppass.test(this.password_confirmation));
-        alert("El formato de la constraseña no es correcto");
+        alert("The format of the passwords do not match ");
         document.getElementById("password").focus();
       }else if(this.first_name == '' || this.middle_name == '' || this.last_name == '' || this.phone_number == '' || this.city == '' || this.state == '' || this.email == '' || this.password == '' || this.password_confirmation == ''){
-        alert("Hay campos vacíos revisa tú información");
+        alert("There are empty fields check your information ");
         document.getElementById("name").focus();
       }else{
         //Evething all rigth
@@ -84,9 +84,10 @@ export class AccountRegistrationComponent implements OnInit {
           let Response = JSON.stringify(res);
           let json = JSON.parse(Response)
           if (json.error_code == 'DuplicatedAccount'){
-            alert("Esta cuenta de usuario ya existe")
+            alert("This user account already exists")
             document.getElementById("name").focus();
           }
+          this.router.navigate(['/'])
         }, err =>{
           // Get error response from the API
           console.log("Error Response: ");
