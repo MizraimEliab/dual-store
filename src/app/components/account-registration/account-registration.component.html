@@ -7,7 +7,7 @@
                 <div class="form-row">
                   <div class="form-group col-md-4">
                     <label for="inputEmail4">Name</label>
-                    <input type="text" class="form-control"  [(ngModel)]="first_name"  [ngModelOptions]="{standalone: true}"  placeholder="Bob">
+                    <input type="text" class="form-control" id="name"   [(ngModel)]="first_name"  [ngModelOptions]="{standalone: true}"  placeholder="Bob">
                   </div>
                   <div class="form-group col-md-4">
                     <label for="inputPassword4">Second name</label>
@@ -22,7 +22,7 @@
                 <div class="form-row">
                     <div class="form-group col-md-4">
                         <label for="inputEmail4">Phone number</label>
-                        <input type="text" class="form-control"   [(ngModel)]="phone_number"  [ngModelOptions]="{standalone: true}"  placeholder="(+52) 449-158-6987">
+                        <input type="text" class="form-control" id="phone"  [(ngModel)]="phone_number"  [ngModelOptions]="{standalone: true}"  placeholder="(+52) 449-158-6987">
                     </div>
                     <div class="form-group col-md-4">
                         <label for="inputPassword4">City</label>
@@ -34,11 +34,11 @@
                     </div>
                     </div>
                   <label for="inputAddress">Email</label>
-                  <input type="email" class="form-control"   [(ngModel)]="email"  [ngModelOptions]="{standalone: true}"  placeholder="example@company.com">
+                  <input type="email" class="form-control" id="email"   [(ngModel)]="email"  [ngModelOptions]="{standalone: true}"  placeholder="example@company.com">
                 </div>
                 <div class="form-group">
                   <label for="inputAddress2">Password</label>
-                  <input type="password" class="form-control"   [(ngModel)]="password"  [ngModelOptions]="{standalone: true}"  placeholder="**********">
+                  <input type="password" class="form-control" id="password" [(ngModel)]="password"  [ngModelOptions]="{standalone: true}"  placeholder="**********">
                 </div>
                 <div class="form-group">
                     <label for="inputAddress2">Confirm Password</label>

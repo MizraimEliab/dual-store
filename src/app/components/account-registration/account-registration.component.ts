@@ -25,11 +25,12 @@ export class AccountRegistrationComponent implements OnInit {
   body:any
   output:any
   @ViewChild('recaptcha', {static: true }) recaptchaElement: ElementRef;
-  
-
+ 
   repetPassword:String
-  regexp = new RegExp('[A-Za-z0-9._%-]+@[A-Za-z0-9._%-]+\\.[a-z]{2,3}');
-  regexppass = new RegExp('^(?=(?:.*\d){8})(?=(?:.*[A-Z]){1})(?=(?:.*[a-z]){1})\S{8,}$');
+  // regex validators
+  regexp = new RegExp(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/);
+  regexppass = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/);
+  regexpphonenumber = new RegExp(/[0-9 ]{11}/);
   constructor(public userService: SigninService, public router: Router) { }
 
   ngOnInit(): void {
@@ -54,10 +55,24 @@ export class AccountRegistrationComponent implements OnInit {
  
       if (this.regexp.test(this.email) == false){
       alert("El correo de cumple con las condiciones de un formato correcto");
+      document.getElementById("email").focus();
+      }else if (this.regexpphonenumber.test(this.phone_number)){
+        alert("El número de teléfono debe contener al menos 10 digitos")
+        document.getElementById("phone").focus();
       }else if (this.password != this.password_confirmation){
         alert("Las contraseñas no son iguales");
-      }else if(this.regexppass.test(this.password) == false || this.regexppass.test(this.password_confirmation)){
+        document.getElementById("password").focus();
+      }else if(this.regexppass.test(this.password) == false || this.regexppass.test(this.password_confirmation) == false){
+        console.log(this.password);
+        console.log(this.password_confirmation);
+        console.log(this.regexppass.test(this.password));
+        
+        console.log(this.regexppass.test(this.password_confirmation));
         alert("El formato de la constraseña no es correcto");
+        document.getElementById("password").focus();
+      }else if(this.first_name == '' || this.middle_name == '' || this.last_name == '' || this.phone_number == '' || this.city == '' || this.state == '' || this.email == '' || this.password == '' || this.password_confirmation == ''){
+        alert("Hay campos vacíos revisa tú información");
+        document.getElementById("name").focus();
       }else{
         //Evething all rigth
         // Go with request to API
@@ -66,7 +81,12 @@ export class AccountRegistrationComponent implements OnInit {
           // Get response from the API
           console.log("Response: ");
           console.log(res);
-          
+          let Response = JSON.stringify(res);
+          let json = JSON.parse(Response)
+          if (json.error_code == 'DuplicatedAccount'){
+            alert("Esta cuenta de usuario ya existe")
+            document.getElementById("name").focus();
+          }
         }, err =>{
           // Get error response from the API
           console.log("Error Response: ");
@@ -77,27 +97,6 @@ export class AccountRegistrationComponent implements OnInit {
     
 
   }
-
-  // addUser(form: NgForm){
-  //   if (this.repetPassword != this.userService.selectedUser.password) {
-  //     alert('Error las contraseñas no son iguales, no creamos tu usuario 😕')
-  //     this.router.navigate(['/Signin'])
-  //   }else if (this.regexp.test(this.userService.selectedUser.email)){
-  //     this.userService.postUser(form.value)
-  //     .subscribe(res => {
-  //       console.log(res);
-  //       alert(res)
-  //       let data = JSON.stringify(res);
-  //       let dataJson = JSON.parse(data);
-  //       localStorage.setItem('token', dataJson.token);
-  //     });
-  //   }else{
-  //     alert('Error el correo no cumple con las condiciones, no creamos tu usuario 😕')
-  //     this.router.navigate(['/Signin'])
-  //   }
-   
-  // }
-
 
   renderReCaptch() {
     window['grecaptcha'].render(this.recaptchaElement.nativeElement, {
