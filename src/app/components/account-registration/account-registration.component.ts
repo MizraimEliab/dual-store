@@ -29,7 +29,7 @@ export class AccountRegistrationComponent implements OnInit {
 
   repetPassword:String
   regexp = new RegExp('[A-Za-z0-9._%-]+@[A-Za-z0-9._%-]+\\.[a-z]{2,3}');
-  regexppass = new RegExp('^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{8,16}$');
+  regexppass = new RegExp('^(?=(?:.*\d){8})(?=(?:.*[A-Z]){1})(?=(?:.*[a-z]){1})\S{8,}$');
   constructor(public userService: SigninService, public router: Router) { }
 
   ngOnInit(): void {
@@ -37,12 +37,7 @@ export class AccountRegistrationComponent implements OnInit {
   }
 
   create_user(){
-    // this.output = {
-    //   user_id: 3,
-    //   username:"bob",
-    //   password: "123344",
-    //   email:"test@gmail.com"
-    //   }
+    // Create de JSON Body with the data
     this.body = {
       first_name: this.first_name,
       middle_name: this.middle_name,
@@ -56,33 +51,29 @@ export class AccountRegistrationComponent implements OnInit {
       password: this.password,
       password_confirmation: this.password_confirmation
     }
-    //console.log(this.body);
-   this.output = JSON.parse(JSON.stringify(this.body))
-   if (this.password != this.password_confirmation){
-    alert("Las contraseñas no son iguales")
-   }else if (this.regexp.test(this.email)){
-     if (this.regexppass.test(this.password)){
-      this.userService.postUser(JSON.parse(JSON.stringify(this.body)))
-      //this.userService.postUser(JSON.parse(JSON.stringify(this.output)))
-      .subscribe(res => {
-        console.log(res);
-        alert(res)
-        
-      }, err =>{
-        console.log("Este es el error");
-        console.log(err);
-        
-        
-      });
-    }else{
-        alert("El formato de la contraseña no es válido")
+ 
+      if (this.regexp.test(this.email) == false){
+      alert("El correo de cumple con las condiciones de un formato correcto");
+      }else if (this.password != this.password_confirmation){
+        alert("Las contraseñas no son iguales");
+      }else if(this.regexppass.test(this.password) == false || this.regexppass.test(this.password_confirmation)){
+        alert("El formato de la constraseña no es correcto");
+      }else{
+        //Evething all rigth
+        // Go with request to API
+        this.userService.postUser(JSON.parse(JSON.stringify(this.body)))
+        .subscribe(res => {
+          // Get response from the API
+          console.log("Response: ");
+          console.log(res);
+          
+        }, err =>{
+          // Get error response from the API
+          console.log("Error Response: ");
+          console.log(err);
+        });      
       }
     
-      
-    }else{
-      alert("El correo de cumple con las condiciones de un formato correcto")
-    }
-   
     
 
   }
@@ -106,10 +97,7 @@ export class AccountRegistrationComponent implements OnInit {
   //   }
    
   // }
-  // test(){
-  //   console.log(this.city);
-    
-  // }
+
 
   renderReCaptch() {
     window['grecaptcha'].render(this.recaptchaElement.nativeElement, {
