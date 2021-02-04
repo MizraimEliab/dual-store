@@ -11,13 +11,17 @@ import {
   RecaptchaSettings,
 } from 'ng-recaptcha';
 import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
+import { LogInComponent } from './components/log-in/log-in.component';
+import { RecoveryPasswordComponent } from './components/recovery-password/recovery-password.component';
 
 const globalSettings: RecaptchaSettings = { siteKey: '6Lfo6T0aAAAAAFSig1fD8Gbv5ljMqH7BKoaRDaGU' };
 
 @NgModule({
   declarations: [
     AppComponent,
-    AccountRegistrationComponent
+    AccountRegistrationComponent,
+    LogInComponent,
+    RecoveryPasswordComponent
   ],
   exports: [AppComponent,AccountRegistrationComponent],
   imports: [

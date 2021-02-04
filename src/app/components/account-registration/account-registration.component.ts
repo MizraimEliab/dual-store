@@ -23,7 +23,6 @@ export class AccountRegistrationComponent implements OnInit {
   password:string;
   password_confirmation:string;
   body:any
-  output:any
   @ViewChild('recaptcha', {static: true }) recaptchaElement: ElementRef;
  
   repetPassword:String
@@ -87,7 +86,7 @@ export class AccountRegistrationComponent implements OnInit {
             alert("This user account already exists")
             document.getElementById("name").focus();
           }
-          this.router.navigate(['/'])
+          this.router.navigate(['/LogIn'])
         }, err =>{
           // Get error response from the API
           console.log("Error Response: ");
