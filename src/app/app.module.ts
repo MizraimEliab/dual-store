@@ -13,6 +13,8 @@ import {
 import { HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import { LogInComponent } from './components/log-in/log-in.component';
 import { RecoveryPasswordComponent } from './components/recovery-password/recovery-password.component';
+import { MainComponent } from './components/main/main.component';
+import { StoreComponent } from './components/store/store.component';
 
 const globalSettings: RecaptchaSettings = { siteKey: '6Lfo6T0aAAAAAFSig1fD8Gbv5ljMqH7BKoaRDaGU' };
 
@@ -21,9 +23,11 @@ const globalSettings: RecaptchaSettings = { siteKey: '6Lfo6T0aAAAAAFSig1fD8Gbv5l
     AppComponent,
     AccountRegistrationComponent,
     LogInComponent,
-    RecoveryPasswordComponent
+    RecoveryPasswordComponent,
+    MainComponent,
+    StoreComponent
   ],
-  exports: [AppComponent,AccountRegistrationComponent],
+  exports: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule, // CLI adds AppRoutingModule to the AppModule's imports array
