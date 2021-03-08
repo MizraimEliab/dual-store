@@ -1,1 +1,51 @@
-<h1>STORE</h1>
+<br><br>
+
+<div class="container">
+    <h5>Search you product</h5>
+    <form (submit)="getProducts()">
+        <div class="input-group mb-3">
+                <input type="text" class="form-control" [(ngModel)]="SearchWord"  [ngModelOptions]="{standalone: true}" placeholder="Search products" >
+                <div class="input-group-append">
+                <!-- <button class="btn btn-outline-primary" type="button" (click)="getProducts()">Search</button> -->
+                <button class="btn btn-outline-primary" type="submit" >Search</button>
+                
+                </div>
+        </div>
+    </form>
+    <div class="row">
+        <div class="col-3">
+            <h5>Categories</h5>
+            <div class="form-check" *ngFor="let category of categories[0]">
+                <input class="form-check-input" type="checkbox" value="{{category.description}}" id="defaultCheck1" (change)="change($event)">
+                <label class="form-check-label" for="defaultCheck1">
+                  {{category.description}}
+                </label>
+              </div>
+        </div>
+        
+        <div class="col-8">
+            <h5>{{elements}} products found</h5>
+            <div class="row">
+                <div class="col-4"></div>
+                <div class="card col-4" style="width: 18rem;"  *ngFor="let item of array">
+                    <br>
+                    <img class="card-img-top" src="{{item.images_small}}" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">{{item.short_description}}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">$ {{item.price}}</h6>
+                        <p class="card-text">{{item.long_description}}</p>
+                    </div>
+                    
+                    <div class="card-body">
+                        <a href="#" class="card-link">Card link</a>
+                        <a href="#" class="card-link">Another link</a>
+                    </div>
+                </div>
+                <div class="col-4"></div>
+            </div>
+           
+        </div>
+        
+    </div>
+</div>
+
