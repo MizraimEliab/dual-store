@@ -33,6 +33,13 @@
         <li class="nav-item">
          <a class="nav-link" id="signin" href="/Signin">Sign in</a> 
         </li>
+        <li class="nav-item">
+            <i class="nav-link bi bi-cart"></i>
+          
+        </li>
+        <li class="nav-item">
+            <label class="nav-link">{{CounterQuantity}}</label>
+        </li>
         <!-- Navbar text with an inline element -->
       </ul>
    
@@ -41,42 +48,40 @@
   <!-- Navbar end -->
 
 
-<!-- <h1 class="display-4" style="text-align: center;">Welcome</h1> -->
-<div class="container">
-  <div class="row">
-    <div class="col-3">
-        <h5>Categories</h5>
-        <div class="form-check" *ngFor="let category of categories[0]">
-            <input class="form-check-input" type="checkbox" value="{{category.description}}" id="defaultCheck1" (change)="change($event)">
-            <label class="form-check-label" for="defaultCheck1">
-              {{category.description}}
-            </label>
-          </div>
-    </div>
-    
-    <div class="col-8">
-        <h5>{{elements}} products found</h5>
-        <div class="row">
-            <div class="col-4"></div>
-            <div class="card col-4" style="width: 18rem;"  *ngFor="let item of array">
-                <br>
-                <img class="card-img-top" src="{{item.images_small}}" alt="Card image cap">
-                <div class="card-body">
-                  <a href=""></a>
-                    <a routerLink="/product/{{item.product_id}}" style="text-decoration: none;" href="" class="card-title">{{item.short_description}}</a><br><br>
-                    <h6 class="card-subtitle mb-2 text-muted">$ {{item.price}}</h6>
-                    <p class="card-text">{{item.long_description}}</p>
+  <!-- Display the element -->
+  <div class="container">
+      <div class="row">
+          <div class="col-2">
+            <ul class="list-group">
+                <div *ngFor="let image of Gallery" >
+                    <li class="list-group" >
+                        
+                        <img class="img-gallery" src="{{image.image}}" >
+                    </li>
                 </div>
+              
                 
-                <!-- <div class="card-body">
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
-                </div> -->
+              </ul>
+          </div>
+          <div class="col-2">
+            <img src="{{ImageLargeProduct}}" class=" img-principal" >
+          </div>
+          <div class="col-8">
+            <div class="card" >
+                
+                <div class="card-body">
+                  <h5 class="card-title">{{NameProduct}}</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">$ {{ProductPrice}}</h6>
+                  <p class="card-text">{{DescriptionProduct}}</p>
+                  <div id="description"></div>
+                  <input type="number" class="form-control"  [(ngModel)]="Quantity"  [ngModelOptions]="{standalone: true}" placeholder="Quantity"> <br>
+                  <button type="button" (click)="addCart()" class="btn btn-primary">Add to cart</button> <br><br>
+                  
+                  <button type="button" class="btn btn-primary">Buy now</button>
+                </div>
             </div>
-            <div class="col-4"></div>
-        </div>
-       
-    </div>
-    
+          </div>
+      </div>
+
   </div>
-</div>
+

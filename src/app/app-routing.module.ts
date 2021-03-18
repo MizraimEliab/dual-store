@@ -7,12 +7,13 @@ import {LogInComponent} from '../app/components/log-in/log-in.component';
 import {MainComponent} from '../app/components/main/main.component';
 import {StoreComponent} from '../app/components/store/store.component';
 import {RecoveryPasswordComponent} from '../app/components/recovery-password/recovery-password.component';
-
+import {ProductComponent} from '../app/components/product/product.component';
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'Signin', component: AccountRegistrationComponent },
   {path: 'LogIn', component: LogInComponent},
   {path: 'RecoveryPassword', component: RecoveryPasswordComponent},
+  {path: 'product/:id', component: ProductComponent },
   {path: 'main', component: MainComponent,
   children: [
     { path: 'store', component: StoreComponent}

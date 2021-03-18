@@ -15,6 +15,9 @@ import { LogInComponent } from './components/log-in/log-in.component';
 import { RecoveryPasswordComponent } from './components/recovery-password/recovery-password.component';
 import { MainComponent } from './components/main/main.component';
 import { StoreComponent } from './components/store/store.component';
+import {HomeComponent} from './components/home/home.component';
+import { ProductComponent } from './components/product/product.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
 const globalSettings: RecaptchaSettings = { siteKey: '6Lfo6T0aAAAAAFSig1fD8Gbv5ljMqH7BKoaRDaGU' };
 
@@ -25,7 +28,10 @@ const globalSettings: RecaptchaSettings = { siteKey: '6Lfo6T0aAAAAAFSig1fD8Gbv5l
     LogInComponent,
     RecoveryPasswordComponent,
     MainComponent,
-    StoreComponent
+    StoreComponent,
+    HomeComponent,
+    ProductComponent,
+    NavbarComponent
   ],
   exports: [AppComponent],
   imports: [
