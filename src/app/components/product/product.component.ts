@@ -10,6 +10,8 @@ import { ActivatedRoute, Params } from '@angular/router';
 })
 export class ProductComponent implements OnInit {
   SearchWordd = '';
+  fullname:string;
+  logOut:string;
   Quantity:number;
   NameProduct:string;
   ImageLargeProduct:string;
@@ -26,10 +28,38 @@ export class ProductComponent implements OnInit {
   
   ngOnInit(): void {
     //console.log(this.ActiveRoute.snapshot.params.id);
+    this.validate_session();
     this.getProductsDetails();
     this.getCartDeatils();
   }
   getProducts(){}
+
+  validate_session(){
+    // console.log("el local storage");
+    // console.log(localStorage.getItem('full_name'));
+    if (localStorage.getItem('session_id') == null || localStorage.getItem('full_name') == null){
+      this.fullname = 'Log In';
+      this.logOut = 'Sign In';
+      console.log(this.fullname);
+      
+      
+     }else{
+       this.fullname = localStorage.getItem('full_name');
+      console.log(this.fullname);
+      
+       this.logOut = 'LogOut';
+       
+    }
+    
+  }
+
+  logout(){
+    localStorage.removeItem('full_name');
+    localStorage.removeItem('session_id');
+    localStorage.removeItem('email');
+    localStorage.removeItem('password');
+    location.reload();
+  }
 
   getProductsDetails(){
     this.ProductDetailsService.productdetails('http://35.167.62.109/storeutags/catalogs/item_details/' + this.ActiveRoute.snapshot.params.id )

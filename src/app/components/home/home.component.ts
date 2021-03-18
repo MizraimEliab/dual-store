@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {SearchService} from '../../services/search.service';
+import {ProductdetailsService} from '../../services/productdetails.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -8,30 +9,50 @@ import {SearchService} from '../../services/search.service';
 })
 export class HomeComponent implements OnInit {
   fullname:string;
+  logOut:string;
   categories = [];
   items = [];
   elements:number;
   SearchWordd = '';
   find = '';
+  CounterQuantity:number;
+  session_id:string;
+  RequestBody:any;
   array: any[];
-  constructor(public SearchService: SearchService,public router: Router) { }
+  constructor(public ProductDetailsService: ProductdetailsService, public SearchService: SearchService,public router: Router) { }
 
   ngOnInit(): void {
-    //this.validate_session();
+    this.validate_session();
     this.getCategories()
     this.getProducts()
+    this.getCartDeatils()
   }
 
   validate_session(){
     // console.log("el local storage");
     // console.log(localStorage.getItem('full_name'));
     if (localStorage.getItem('session_id') == null || localStorage.getItem('full_name') == null){
-      this.router.navigate(['/LogIn'])
+      this.fullname = 'Log In';
+      this.logOut = 'Sign In';
+      console.log(this.fullname);
+      
+      this.router.navigate(['/'])
      }else{
        this.fullname = localStorage.getItem('full_name');
-       this.router.navigate(['/main/store'])
+      console.log(this.fullname);
+      
+       this.logOut = 'LogOut';
+       this.router.navigate(['/'])
     }
     
+  }
+
+  logout(){
+    localStorage.removeItem('full_name');
+    localStorage.removeItem('session_id');
+    localStorage.removeItem('email');
+    localStorage.removeItem('password');
+    location.reload();
   }
 
   getProducts(){
@@ -116,7 +137,27 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  getCartDeatils(){
+    this.session_id = localStorage.getItem('session_id')
+    this.RequestBody = {
+      session_id: this.session_id
+    }
+    if(localStorage.getItem('session_id') == null){
+      
+      this.CounterQuantity = 0
+      
+    }else{
+      this.ProductDetailsService.getCartDetail(JSON.parse(JSON.stringify(this.RequestBody)))
+      .subscribe(res=>{
+      let Response = JSON.stringify(res);
+      let json = JSON.parse(Response)
+      console.log(json.data.items_quantity);
+      this.CounterQuantity = json.data.items_quantity
+        
+      });
+    }
 
+  }
   
 
 }
