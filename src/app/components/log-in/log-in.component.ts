@@ -66,11 +66,13 @@ export class LogInComponent implements OnInit {
           localStorage.setItem('session_id', json.data.session_id);
           localStorage.setItem('email', json.original_request.email);
           localStorage.setItem('password', json.original_request.password);
-          this.router.navigate(['/']);
+          //this.router.navigate(['/']);
+          window.history.back();
         }else{
           localStorage.setItem('full_name', json.data.customer.full_name);
           localStorage.setItem('session_id', json.data.session_id);
-          this.router.navigate(['/']);
+          //this.router.navigate(['/']);
+          window.history.back();
         }
       }else{
         if (json.error_code == 'EmailAndPasswordDoesNotMatch'){

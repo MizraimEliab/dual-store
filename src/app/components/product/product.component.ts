@@ -89,7 +89,7 @@ export class ProductComponent implements OnInit {
     }
     if(localStorage.getItem('session_id') == null){
       alert("Login to add products to cart");
-      
+      this.router.navigate(['/LogIn'])
       
     }else{
       this.ProductDetailsService.addCart(JSON.parse(JSON.stringify(this.RequestBody)))
