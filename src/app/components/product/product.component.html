@@ -45,7 +45,7 @@
         </li>
 
         <li class="nav-item">
-            <i class="nav-link bi bi-cart"></i>
+            <a href="/cart"><i  class="nav-link bi bi-cart"></i></a>
           
         </li>
         <li class="nav-item">
@@ -85,7 +85,7 @@
                   <h6 class="card-subtitle mb-2 text-muted">$ {{ProductPrice}}</h6>
                   <p class="card-text">{{DescriptionProduct}}</p>
                   <div id="description"></div>
-                  <input type="number" class="form-control"  [(ngModel)]="Quantity"  [ngModelOptions]="{standalone: true}" placeholder="Quantity"> <br>
+                  <input type="number"  class="form-control"  [(ngModel)]="Quantity"  [ngModelOptions]="{standalone: true}" placeholder="Quantity"> <br>
                   <button type="button" (click)="addCart()" class="btn btn-primary">Add to cart</button> <br><br>
                   
                   <button type="button" class="btn btn-primary">Buy now</button>

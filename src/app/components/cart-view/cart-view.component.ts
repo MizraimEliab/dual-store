@@ -44,7 +44,7 @@ export class CartViewComponent implements OnInit {
       this.logOut = 'Sign In';
       console.log(this.fullname);
       
-      this.router.navigate(['/'])
+      this.router.navigate(['/LogIn'])
      }else{
         this.fullname = localStorage.getItem('full_name');
         console.log(this.fullname);
@@ -147,7 +147,7 @@ export class CartViewComponent implements OnInit {
       this.CounterQuantity = 0
       // redirect to home
       
-      this.router.navigate(['/'])
+      this.router.navigate(['/LogIn'])
       
     }else{
       this.ProductDetailsService.getCartDetail(JSON.parse(JSON.stringify(this.RequestBody)))
@@ -161,7 +161,9 @@ export class CartViewComponent implements OnInit {
       this.iva = json.data.taxes
       this.total = json.data.total
       this.CounterQuantity = json.data.items_quantity
-        
+      if (this.CounterQuantity == 0){
+        this.router.navigate(['/'])
+      }
       });
     }
 
@@ -197,17 +199,37 @@ export class CartViewComponent implements OnInit {
       session_id: this.session,
       item_id: id
     }
+
+    let xml = this.deleteOne(this.RequestUpdate);
+    console.log(xml)
+
     console.log('DELETE ****************');
     console.log(this.RequestUpdate);
+    this.getCartDeatils()
     
-    
-    this.carts.deleteCart(this.RequestUpdate)
-    .subscribe(res=>{
-      console.log(res);
+    // this.carts.deleteCart(this.RequestUpdate)
+    // .subscribe(res=>{
+    //   console.log(res);
       
-    }
-    , err => console.log(err))
+    // }
+    // , err => console.log(err))
     
+  }
+
+  deleteOne(obj){
+    let xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = this.callbackFunction(xmlhttp);
+    xmlhttp.open('DELETE','http://35.167.62.109/storeutags/cart/remove_item',false);
+    xmlhttp.setRequestHeader('Content-Type', 'application/json');
+    xmlhttp.onreadystatechange = this.callbackFunction(xmlhttp);
+    xmlhttp.send(JSON.stringify(obj)); 
+    return xmlhttp; 
+  }
+
+  callbackFunction(xmlhttp){
+    console.log(xmlhttp);
+    return xmlhttp;
+
   }
 
 }
