@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {SearchService} from '../../services/search.service';
 import {ProductdetailsService} from '../../services/productdetails.service';
+import {CartService} from '../../services/cart.service';
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-cart-view',
+  templateUrl: './cart-view.component.html',
+  styleUrls: ['./cart-view.component.css']
 })
-export class HomeComponent implements OnInit {
+export class CartViewComponent implements OnInit {
   fullname:string;
   logOut:string;
   categories = [];
@@ -16,13 +17,20 @@ export class HomeComponent implements OnInit {
   SearchWordd = '';
   find = '';
   CounterQuantity:number;
+  quantity_in:number;
   session_id:string;
   RequestBody:any;
+  RequestUpdate:any;
   array: any[];
-  constructor(public ProductDetailsService: ProductdetailsService, public SearchService: SearchService,public router: Router) { }
+  cart: any[];
+  session:string;
+  subtotal:number;
+  iva:number;
+  total:number;
+  constructor(public carts: CartService ,public ProductDetailsService: ProductdetailsService,public SearchService: SearchService,public router: Router) { }
 
   ngOnInit(): void {
-    this.validate_session();
+    this.validate_session()
     this.getCategories()
     this.getProducts()
     this.getCartDeatils()
@@ -38,11 +46,11 @@ export class HomeComponent implements OnInit {
       
       this.router.navigate(['/'])
      }else{
-       this.fullname = localStorage.getItem('full_name');
-      console.log(this.fullname);
+        this.fullname = localStorage.getItem('full_name');
+        console.log(this.fullname);
       
        this.logOut = 'LogOut';
-       this.router.navigate(['/'])
+       //this.router.navigate(['/'])
     }
     
   }
@@ -103,9 +111,6 @@ export class HomeComponent implements OnInit {
   }
 
   change(event){
-    // console.log(event.target.checked);
-    // console.log(event.target.defaultValue);
-    // console.log(event);
     if (event.target.checked == true){
       this.find = this.find + event.target.defaultValue + ';';
       //console.log(this.find);
@@ -113,11 +118,6 @@ export class HomeComponent implements OnInit {
     }else{
       // no esta en true la casilla
       this.find = this.find.replace(event.target.defaultValue + ';', '')
-
-      //this.find = this.find.replace(';','')
-      // console.log('nuevo');
-      
-      // console.log(this.find);
       
     }
     
@@ -145,8 +145,9 @@ export class HomeComponent implements OnInit {
     if(localStorage.getItem('session_id') == null){
       
       this.CounterQuantity = 0
-
-     
+      // redirect to home
+      
+      this.router.navigate(['/'])
       
     }else{
       this.ProductDetailsService.getCartDetail(JSON.parse(JSON.stringify(this.RequestBody)))
@@ -154,12 +155,59 @@ export class HomeComponent implements OnInit {
       let Response = JSON.stringify(res);
       let json = JSON.parse(Response)
       console.log(json.data.items_quantity);
+      console.log( json.data);
+      this.cart = json.data.items
+      this.subtotal = json.data.sub_total
+      this.iva = json.data.taxes
+      this.total = json.data.total
       this.CounterQuantity = json.data.items_quantity
         
       });
     }
 
   }
-  
+  //update the cart
+  changequantity(event, item_id){
+    //console.log('***********************************');
+    
+    //console.log(item_id);
+    
+    this.session = localStorage.getItem('session_id')
+    this.RequestUpdate = {
+      session_id: this.session,
+      item_id: item_id,
+      item_quantity: event.target.value
+    }
+    //console.log(event.target.value);
+    this.carts.updateCart(this.RequestUpdate)
+    .subscribe(res=>{
+      //console.log('+++++++++++');
+      console.log(res);
+      this.getCartDeatils()
+      
+    })
+    
+  }
+
+  deleteItem(id){
+    this.session = localStorage.getItem('session_id')
+    console.log(this.session);
+    
+    this.RequestUpdate = {
+      session_id: this.session,
+      item_id: id
+    }
+    console.log('DELETE ****************');
+    console.log(this.RequestUpdate);
+    
+    
+    this.carts.deleteCart(this.RequestUpdate)
+    .subscribe(res=>{
+      console.log(res);
+      
+    }
+    , err => console.log(err))
+    
+  }
 
 }

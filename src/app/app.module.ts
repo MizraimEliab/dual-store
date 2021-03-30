@@ -18,6 +18,7 @@ import { StoreComponent } from './components/store/store.component';
 import {HomeComponent} from './components/home/home.component';
 import { ProductComponent } from './components/product/product.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { CartViewComponent } from './components/cart-view/cart-view.component';
 
 const globalSettings: RecaptchaSettings = { siteKey: '6Lfo6T0aAAAAAFSig1fD8Gbv5ljMqH7BKoaRDaGU' };
 
@@ -31,7 +32,8 @@ const globalSettings: RecaptchaSettings = { siteKey: '6Lfo6T0aAAAAAFSig1fD8Gbv5l
     StoreComponent,
     HomeComponent,
     ProductComponent,
-    NavbarComponent
+    NavbarComponent,
+    CartViewComponent
   ],
   exports: [AppComponent],
   imports: [

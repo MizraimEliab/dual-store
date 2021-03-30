@@ -1,3 +1,5 @@
+ 
+  
   <!-- Navbar  -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <a class="navbar-brand" href="/">Dual Store</a>
@@ -46,8 +48,7 @@
         
 
         <li class="nav-item">
-          <a href="/cart"><i class="nav-link bi bi-cart"></i></a>
-          
+          <i class="nav-link bi bi-cart"></i>
         
       </li>
       <li class="nav-item">
@@ -60,43 +61,36 @@
   </nav>
   <!-- Navbar end -->
 
-
-<!-- <h1 class="display-4" style="text-align: center;">Welcome</h1> -->
 <div class="container">
-  <div class="row">
-    <div class="col-3">
-        <h5>Categories</h5>
-        <div class="form-check" *ngFor="let category of categories[0]">
-            <input class="form-check-input" type="checkbox" value="{{category.description}}" id="defaultCheck1" (change)="change($event)">
-            <label class="form-check-label" for="defaultCheck1">
-              {{category.description}}
-            </label>
-          </div>
+    <div class="row">
+        <!-- <h4>Shopping Cart </h4> -->
     </div>
-    
-    <div class="col-8">
-        <h5>{{elements}} products found</h5>
-        <div class="row">
-            <div class="col-4"></div>
-            <div class="card col-4" style="width: 18rem;"  *ngFor="let item of array">
-                <br>
-                <img class="card-img-top" src="{{item.images_small}}" alt="Card image cap">
+    <div class="row">
+        <div class="col">
+            <h4>Shopping Cart </h4>
+            <div class="card mb-3" *ngFor="let item of cart">
+                <img src="{{item.images_small}}" class="card-img-top img-size" alt="...">
                 <div class="card-body">
-                  <a href=""></a>
-                    <a routerLink="/product/{{item.product_id}}" style="text-decoration: none;" href="" class="card-title">{{item.short_description}}</a><br><br>
-                    <h6 class="card-subtitle mb-2 text-muted">$ {{item.price}}</h6>
-                    <p class="card-text">{{item.long_description}}</p>
+                  <h5 class="card-title">{{item.short_description}}</h5>
+                  <p class="card-text">{{item.long_description}}</p>
+                  <h6>Unit price: <span>$ {{item.price}}</span></h6> <br>
+                  <h6>Quantity: <input type="number" (change)="changequantity($event,item.product_id)"  value="{{item.quantity}}"> </h6> <br>
+                  <h6>Subtotal: <span>$ {{item.sub_total}}</span></h6>
+                  <button class="btn btn-danger" (click)="deleteItem(item.product_id)">Delete</button>
                 </div>
-                
-                <!-- <div class="card-body">
-                    <a href="#" class="card-link">Card link</a>
-                    <a href="#" class="card-link">Another link</a>
-                </div> -->
             </div>
-            <div class="col-4"></div>
         </div>
-       
+        <div class="col">
+            <h4>Cart summary </h4>
+            <div class="card" style="width: 18rem;" >
+                <div class="card-body">
+                  <h5 class="card-title">Subtotal: $<span> {{subtotal}}</span></h5>
+                  <h5 class="card-title">IVA: $<span> {{iva}}</span></h5>
+                  <h5 class="card-title">Total: $<span> {{total}}</span></h5>
+                  
+                  <button class="btn btn-success">Pay now</button>
+                </div>
+              </div>
+        </div>
     </div>
-    
-  </div>
 </div>
