@@ -9,6 +9,7 @@ import {StoreComponent} from '../app/components/store/store.component';
 import {RecoveryPasswordComponent} from '../app/components/recovery-password/recovery-password.component';
 import {ProductComponent} from '../app/components/product/product.component';
 import {CartViewComponent} from '../app/components/cart-view/cart-view.component';
+import {CheckoutPaypalComponent} from '../app/components/checkout-paypal/checkout-paypal.component';
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'Signin', component: AccountRegistrationComponent },
@@ -16,10 +17,11 @@ const routes: Routes = [
   {path: 'RecoveryPassword', component: RecoveryPasswordComponent},
   {path: 'product/:id', component: ProductComponent },
   {path: 'cart', component: CartViewComponent},
-  {path: 'main', component: MainComponent,
-  children: [
-    { path: 'store', component: StoreComponent}
-  ]}
+  {path: 'checkout', component: CheckoutPaypalComponent}
+  // {path: 'main', component: MainComponent,
+  // children: [
+  //   { path: 'store', component: StoreComponent}
+  // ]}
 ];
 
 @NgModule({

@@ -19,7 +19,9 @@ import {HomeComponent} from './components/home/home.component';
 import { ProductComponent } from './components/product/product.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { CartViewComponent } from './components/cart-view/cart-view.component';
-
+import { CheckoutPaypalComponent } from './components/checkout-paypal/checkout-paypal.component';
+import { NgxPayPalModule } from 'ngx-paypal';
+import { OrdersComponent } from './components/orders/orders.component';
 const globalSettings: RecaptchaSettings = { siteKey: '6Lfo6T0aAAAAAFSig1fD8Gbv5ljMqH7BKoaRDaGU' };
 
 @NgModule({
@@ -33,7 +35,9 @@ const globalSettings: RecaptchaSettings = { siteKey: '6Lfo6T0aAAAAAFSig1fD8Gbv5l
     HomeComponent,
     ProductComponent,
     NavbarComponent,
-    CartViewComponent
+    CartViewComponent,
+    CheckoutPaypalComponent,
+    OrdersComponent
   ],
   exports: [AppComponent],
   imports: [
@@ -41,7 +45,8 @@ const globalSettings: RecaptchaSettings = { siteKey: '6Lfo6T0aAAAAAFSig1fD8Gbv5l
     AppRoutingModule, // CLI adds AppRoutingModule to the AppModule's imports array
     RecaptchaModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgxPayPalModule
     
   ],
  
