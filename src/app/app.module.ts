@@ -22,6 +22,8 @@ import { CartViewComponent } from './components/cart-view/cart-view.component';
 import { CheckoutPaypalComponent } from './components/checkout-paypal/checkout-paypal.component';
 import { NgxPayPalModule } from 'ngx-paypal';
 import { OrdersComponent } from './components/orders/orders.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ConfirmationComponent } from './components/confirmation/confirmation.component';
 const globalSettings: RecaptchaSettings = { siteKey: '6Lfo6T0aAAAAAFSig1fD8Gbv5ljMqH7BKoaRDaGU' };
 
 @NgModule({
@@ -37,7 +39,8 @@ const globalSettings: RecaptchaSettings = { siteKey: '6Lfo6T0aAAAAAFSig1fD8Gbv5l
     NavbarComponent,
     CartViewComponent,
     CheckoutPaypalComponent,
-    OrdersComponent
+    OrdersComponent,
+    ConfirmationComponent
   ],
   exports: [AppComponent],
   imports: [
@@ -46,7 +49,8 @@ const globalSettings: RecaptchaSettings = { siteKey: '6Lfo6T0aAAAAAFSig1fD8Gbv5l
     RecaptchaModule,
     HttpClientModule,
     FormsModule,
-    NgxPayPalModule
+    NgxPayPalModule,
+    NgbModule
     
   ],
  

@@ -77,6 +77,7 @@
                   <h6>Quantity: <input type="number" (change)="changequantity($event,item.product_id)"  value="{{item.quantity}}"> </h6> <br>
                   <h6>Subtotal: <span>$ {{item.sub_total}}</span></h6>
                   <button class="btn btn-danger" (click)="deleteItem(item.product_id)">Delete</button>
+                  <!-- <button (click)="openConfirmationDialog()"></button> -->
                 </div>
             </div>
         </div>

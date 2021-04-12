@@ -217,19 +217,42 @@ export class CartViewComponent implements OnInit {
   }
 
   deleteOne(obj){
-    let xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = this.callbackFunction(xmlhttp);
-    xmlhttp.open('DELETE','http://35.167.62.109/storeutags/cart/remove_item',false);
-    xmlhttp.setRequestHeader('Content-Type', 'application/json');
-    xmlhttp.onreadystatechange = this.callbackFunction(xmlhttp);
-    xmlhttp.send(JSON.stringify(obj)); 
-    return xmlhttp; 
+    this.carts.confirm('Confirmation required ', 'Do you really want to remove this product?')
+    .then(confirmed =>{
+      if (confirmed == true){
+        let xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = this.callbackFunction(xmlhttp);
+        xmlhttp.open('DELETE','http://35.167.62.109/storeutags/cart/remove_item',false);
+        xmlhttp.setRequestHeader('Content-Type', 'application/json');
+        xmlhttp.onreadystatechange = this.callbackFunction(xmlhttp);
+        xmlhttp.send(JSON.stringify(obj)); 
+        this.getCartDeatils()
+        return xmlhttp; 
+        
+      }
+    })
+    
+    .catch(() => console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
+    
+    // let xmlhttp = new XMLHttpRequest();
+    // xmlhttp.onreadystatechange = this.callbackFunction(xmlhttp);
+    // xmlhttp.open('DELETE','http://35.167.62.109/storeutags/cart/remove_item',false);
+    // xmlhttp.setRequestHeader('Content-Type', 'application/json');
+    // xmlhttp.onreadystatechange = this.callbackFunction(xmlhttp);
+    // xmlhttp.send(JSON.stringify(obj)); 
+    // return xmlhttp; 
   }
 
   callbackFunction(xmlhttp){
     console.log(xmlhttp);
     return xmlhttp;
 
+  }
+
+  public openConfirmationDialog() {
+    this.carts.confirm('Confirmation required ', 'Do you really want to remove this product?')
+    .then((confirmed) => console.log('User confirmed:', confirmed))
+    .catch(() => console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
   }
 
 }
