@@ -24,6 +24,9 @@ import { NgxPayPalModule } from 'ngx-paypal';
 import { OrdersComponent } from './components/orders/orders.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationComponent } from './components/confirmation/confirmation.component';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+
 const globalSettings: RecaptchaSettings = { siteKey: '6Lfo6T0aAAAAAFSig1fD8Gbv5ljMqH7BKoaRDaGU' };
 
 @NgModule({
@@ -41,8 +44,9 @@ const globalSettings: RecaptchaSettings = { siteKey: '6Lfo6T0aAAAAAFSig1fD8Gbv5l
     CheckoutPaypalComponent,
     OrdersComponent,
     ConfirmationComponent
+    
   ],
-  exports: [AppComponent],
+  exports: [AppComponent,MatSnackBarModule],
   imports: [
     BrowserModule,
     AppRoutingModule, // CLI adds AppRoutingModule to the AppModule's imports array
@@ -50,7 +54,8 @@ const globalSettings: RecaptchaSettings = { siteKey: '6Lfo6T0aAAAAAFSig1fD8Gbv5l
     HttpClientModule,
     FormsModule,
     NgxPayPalModule,
-    NgbModule
+    NgbModule,
+    NoopAnimationsModule
     
   ],
  

@@ -6,7 +6,7 @@ import {ConfirmationComponent} from '../components/confirmation/confirmation.com
   providedIn: 'root'
 })
 export class CartService {
-
+  
   URL_API = 'http://35.167.62.109/storeutags/cart/update_item';
   URL_API_D = 'http://35.167.62.109/storeutags/cart/remove_item';
   URL_API_DA = 'http://35.167.62.109/storeutags/cart/remove_all';
@@ -35,6 +35,8 @@ export class CartService {
   getOrders(body:any){
     return this.http.post(this.URL_API_ORDERS, body)
   }
+
+ 
 
 
   public confirm(

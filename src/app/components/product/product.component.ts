@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {ProductdetailsService} from '../../services/productdetails.service';
 import { Router } from '@angular/router';
+import {MatSnackBar} from '@angular/material/snack-bar';
 // get params by Route
 import { ActivatedRoute, Params } from '@angular/router';
 @Component({
@@ -9,6 +10,7 @@ import { ActivatedRoute, Params } from '@angular/router';
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {
+  durationInSeconds = 5;
   SearchWordd = '';
   fullname:string;
   logOut:string;
@@ -23,7 +25,7 @@ export class ProductComponent implements OnInit {
   session_id:string;
   CounterQuantity:number
   //item_id:number;
-  constructor(public ProductDetailsService: ProductdetailsService,public router: Router, private ActiveRoute: ActivatedRoute) { }
+  constructor(private _snackBar: MatSnackBar, public ProductDetailsService: ProductdetailsService,public router: Router, private ActiveRoute: ActivatedRoute) { }
 
   
   ngOnInit(): void {
@@ -33,6 +35,9 @@ export class ProductComponent implements OnInit {
     this.getCartDeatils();
   }
   getProducts(){}
+
+
+
 
   validate_session(){
     // console.log("el local storage");
@@ -104,6 +109,7 @@ export class ProductComponent implements OnInit {
           
         }else{
           alert("Product added successfully ");
+          
           this.getCartDeatils();
         }
       });
@@ -133,4 +139,6 @@ export class ProductComponent implements OnInit {
     }
 
   }
+
+  
 }
