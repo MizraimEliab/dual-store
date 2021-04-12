@@ -42,7 +42,8 @@ export class CheckoutPaypalComponent implements OnInit {
   ngOnInit(): void {
     this.showPayment = true;
     this.showThanks = false;
-    this.getCartDeatils()
+    this.getCartDeatils();
+    this.validate_session();
     this.initConfig();
   }
 

@@ -10,6 +10,7 @@ import {RecoveryPasswordComponent} from '../app/components/recovery-password/rec
 import {ProductComponent} from '../app/components/product/product.component';
 import {CartViewComponent} from '../app/components/cart-view/cart-view.component';
 import {CheckoutPaypalComponent} from '../app/components/checkout-paypal/checkout-paypal.component';
+import {OrdersComponent} from '../app/components/orders/orders.component';
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'Signin', component: AccountRegistrationComponent },
@@ -17,7 +18,8 @@ const routes: Routes = [
   {path: 'RecoveryPassword', component: RecoveryPasswordComponent},
   {path: 'product/:id', component: ProductComponent },
   {path: 'cart', component: CartViewComponent},
-  {path: 'checkout', component: CheckoutPaypalComponent}
+  {path: 'checkout', component: CheckoutPaypalComponent},
+  {path: 'myorders', component: OrdersComponent}
   // {path: 'main', component: MainComponent,
   // children: [
   //   { path: 'store', component: StoreComponent}

@@ -9,6 +9,7 @@ export class CartService {
   URL_API_D = 'http://35.167.62.109/storeutags/cart/remove_item';
   URL_API_DA = 'http://35.167.62.109/storeutags/cart/remove_all';
   URL_API_ORDER = 'http://35.167.62.109/storeutags/order/create';
+  URL_API_ORDERS = 'http://35.167.62.109/storeutags/order/get_orders';
 
   constructor(private http: HttpClient) { }
 
@@ -27,5 +28,9 @@ export class CartService {
 
   createOrder(body:any){
     return this.http.post(this.URL_API_ORDER,body)
+  }
+
+  getOrders(body:any){
+    return this.http.post(this.URL_API_ORDERS, body)
   }
 }
