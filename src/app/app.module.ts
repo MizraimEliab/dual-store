@@ -26,6 +26,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ConfirmationComponent } from './components/confirmation/confirmation.component';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastComponent } from './components/toast/toast.component';
 
 const globalSettings: RecaptchaSettings = { siteKey: '6Lfo6T0aAAAAAFSig1fD8Gbv5ljMqH7BKoaRDaGU' };
 
@@ -43,7 +44,8 @@ const globalSettings: RecaptchaSettings = { siteKey: '6Lfo6T0aAAAAAFSig1fD8Gbv5l
     CartViewComponent,
     CheckoutPaypalComponent,
     OrdersComponent,
-    ConfirmationComponent
+    ConfirmationComponent,
+    ToastComponent
     
   ],
   exports: [AppComponent,MatSnackBarModule],

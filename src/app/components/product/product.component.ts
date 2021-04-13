@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import {ProductdetailsService} from '../../services/productdetails.service';
 import { Router } from '@angular/router';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {SearchService} from '../../services/search.service';
 // get params by Route
 import { ActivatedRoute, Params } from '@angular/router';
+import {ToastService} from '../../services/toast.service';
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -24,8 +26,10 @@ export class ProductComponent implements OnInit {
   RequestBody:any;
   session_id:string;
   CounterQuantity:number
+  array: any[];
+  elements:number;
   //item_id:number;
-  constructor(private _snackBar: MatSnackBar, public ProductDetailsService: ProductdetailsService,public router: Router, private ActiveRoute: ActivatedRoute) { }
+  constructor(public toastService: ToastService,public SearchService: SearchService,private _snackBar: MatSnackBar, public ProductDetailsService: ProductdetailsService,public router: Router, private ActiveRoute: ActivatedRoute) { }
 
   
   ngOnInit(): void {
@@ -34,7 +38,54 @@ export class ProductComponent implements OnInit {
     this.getProductsDetails();
     this.getCartDeatils();
   }
-  getProducts(){}
+  getProducts(){
+    
+    this.array = [];
+    //this.items = [];
+    this.SearchService.getByText('http://35.167.62.109/storeutags/catalogs/items/by_text/' + this.SearchWordd)
+    .subscribe(res =>{
+      let Response = JSON.stringify(res);
+      let json = JSON.parse(Response)
+ 
+      if (json.hasOwnProperty("data") == true){
+        //console.log("los items son:");
+        this.array = json.data.items
+        //console.log(this.array);
+
+      
+        this.elements = this.array.length
+        
+      }else{
+        this.elements = 0
+      }
+ 
+    });
+    
+  }
+
+  test(){
+    
+    this.router.navigate(['/'], { queryParams: { product: this.SearchWordd } });
+    
+  }
+
+  showSuccess() {
+    this.toastService.show('Product added successfully', {
+      classname: 'bg-success text-light',
+      delay: 2000 ,
+      autohide: true,
+      headertext: 'Message'
+    });
+  }
+
+  showError() {
+    this.toastService.show('The field must contain a number and cannot be empty', {
+      classname: 'bg-danger text-light',
+      delay: 2000 ,
+      autohide: true,
+      headertext: 'Error message'
+    });
+  }
 
 
 
@@ -105,11 +156,11 @@ export class ProductComponent implements OnInit {
         let json = JSON.parse(Response)
         
         if (json.error_code == 'ViolatedRules'){
-          alert("The field must contain a number and cannot be empty ");
-          
+          //alert("The field must contain a number and cannot be empty ");
+          this.showError()
         }else{
-          alert("Product added successfully ");
-          
+          //alert("Product added successfully ");
+          this.showSuccess()
           this.getCartDeatils();
         }
       });

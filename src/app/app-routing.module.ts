@@ -12,7 +12,7 @@ import {CartViewComponent} from '../app/components/cart-view/cart-view.component
 import {CheckoutPaypalComponent} from '../app/components/checkout-paypal/checkout-paypal.component';
 import {OrdersComponent} from '../app/components/orders/orders.component';
 const routes: Routes = [
-  { path: '', component: HomeComponent },
+  { path: '', component: HomeComponent,  },
   { path: 'Signin', component: AccountRegistrationComponent },
   {path: 'LogIn', component: LogInComponent},
   {path: 'RecoveryPassword', component: RecoveryPasswordComponent},
