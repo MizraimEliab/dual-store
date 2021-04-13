@@ -255,9 +255,14 @@ export class OrdersComponent implements OnInit {
       let json = JSON.parse(Response)
       console.log("******************");
       console.log(json);
-      this.ordersFound = json.data.orders.length
+      if (json.hasOwnProperty("data") == false){
+        this.ordersFound = 0
+      }else{
+        this.ordersFound = json.data.orders.length
       
        this.orders = json.data.orders
+      }
+      
     })
   }
 
