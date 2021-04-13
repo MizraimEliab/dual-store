@@ -71,19 +71,25 @@
             <div class="card mb-3" *ngFor="let item of cart">
                 <img src="{{item.images_small}}" class="card-img-top img-size" alt="...">
                 <div class="card-body">
-                  <h5 class="card-title">{{item.short_description}}</h5>
-                  <p class="card-text">{{item.long_description}}</p>
-                  <h6>Unit price: <span>$ {{item.price}}</span></h6> <br>
-                  <h6>Quantity: <input type="number" (change)="changequantity($event,item.product_id)"  value="{{item.quantity}}"> </h6> <br>
-                  <h6>Subtotal: <span>$ {{item.sub_total}}</span></h6>
-                  <button class="btn btn-danger" (click)="deleteItem(item.product_id)">Delete</button>
+                  <!-- <h5 class="card-title">{{item.short_description}}</h5>
+                  <p class="card-text">{{item.long_description}}</p> -->
+                  <h5 >{{item.short_description}}</h5>
+                  <p >{{item.long_description}}</p>
+                  <div class="row">
+                    <div class="col"><h6>Unit price: <span>$ {{item.price}}</span></h6> </div>
+                    <div class="col"> <h6>Subtotal: <span>$ {{item.sub_total}}</span></h6></div>
+                  </div>
+                  
+                 
+                  <h6>Quantity: <input type="number" (change)="changequantity($event,item.product_id)"  value="{{item.quantity}}"> </h6> 
+                  <button class="btn btn-danger" (click)="deleteItem(item.product_id)">Remove product from cart </button>
                   <!-- <button (click)="openConfirmationDialog()"></button> -->
                 </div>
             </div>
         </div>
         <div class="col">
             <h4>Cart summary </h4>
-            <div class="card" style="width: 18rem;" >
+            <div class="card"  >
                 <div class="card-body">
                   <h5 class="card-title">Subtotal: $<span> {{subtotal}}</span></h5>
                   <h5 class="card-title">IVA: $<span> {{iva}}</span></h5>

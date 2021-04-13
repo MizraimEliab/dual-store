@@ -1,5 +1,16 @@
-.img-size{
+/* .img-size{
     width: 600px;
     height: 300px;
     text-align: center;
+} */
+
+.card {
+flex-direction: row;
+}
+.card img {
+width: 30%;
+height: 30%;
+}
+.btn {
+    white-space: normal;
 }
