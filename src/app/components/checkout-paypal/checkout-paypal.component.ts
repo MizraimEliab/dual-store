@@ -4,6 +4,7 @@ import {SearchService} from '../../services/search.service';
 import {ProductdetailsService} from '../../services/productdetails.service';
 import {CartService} from '../../services/cart.service';
 import {IPayPalConfig,ICreateOrderRequest } from 'ngx-paypal';
+import {SearchOtherService} from '../../services/search-other.service';
 // import { NgxPayPalModule } from 'ngx-paypal';
 declare let paypal: any;
 @Component({
@@ -37,7 +38,7 @@ export class CheckoutPaypalComponent implements OnInit {
   numberOrder:string;
   public payPalConfig ? : IPayPalConfig;
   
-  constructor(public carts: CartService ,public ProductDetailsService: ProductdetailsService,public SearchService: SearchService,public router: Router) { }
+  constructor(public searchO: SearchOtherService,public carts: CartService ,public ProductDetailsService: ProductdetailsService,public SearchService: SearchService,public router: Router) { }
 
   ngOnInit(): void {
     this.showPayment = true;
@@ -96,6 +97,13 @@ export class CheckoutPaypalComponent implements OnInit {
     });
     
   }
+
+  getProductsO(){
+    this.searchO.wordfind = this.SearchWordd
+    this.router.navigate(['/'], { queryParams: { product: this.searchO.wordfind } });
+  }
+
+
 
 
 

@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { from } from 'rxjs';
 import { SigninService } from '../../services/signin.service';
-
-
+import {ToastService} from '../../services/toast.service';
+import {PagerService} from '../../services/pager.service';
 @Component({
   selector: 'app-account-registration',
   templateUrl: './account-registration.component.html',
@@ -30,10 +30,68 @@ export class AccountRegistrationComponent implements OnInit {
   regexp = new RegExp(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/);
   regexppass = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/);
   regexpphonenumber = new RegExp(/[0-9 ]{11}/);
-  constructor(public userService: SigninService, public router: Router) { }
+  constructor(public page : PagerService,public toastService: ToastService,public userService: SigninService, public router: Router) { }
 
   ngOnInit(): void {
     this.addRecaptchaScript();
+  }
+
+  showSuccess() {
+    this.toastService.show('Account created successfully ', {
+      classname: 'bg-success text-light',
+      delay: 2000 ,
+      autohide: true,
+      headertext: 'Message'
+    });
+  }
+
+  showErrorEmail() {
+    this.toastService.show('The mail does not match the format conditions', {
+      classname: 'bg-danger text-light',
+      delay: 2000 ,
+      autohide: true,
+      headertext: 'Error message'
+    });
+  }
+  showErrorNumber() {
+    this.toastService.show('The phone number must contain at least 10 digits', {
+      classname: 'bg-danger text-light',
+      delay: 2000 ,
+      autohide: true,
+      headertext: 'Error message'
+    });
+  }
+  showErrorPassMatch() {
+    this.toastService.show('Passwords do not match', {
+      classname: 'bg-danger text-light',
+      delay: 2000 ,
+      autohide: true,
+      headertext: 'Error message'
+    });
+  }
+  showErrorPassFormat() {
+    this.toastService.show('The format of the passwords do not match', {
+      classname: 'bg-danger text-light',
+      delay: 2000 ,
+      autohide: true,
+      headertext: 'Error message'
+    });
+  }
+  showErrorEmpty() {
+    this.toastService.show('There are empty fields check your information', {
+      classname: 'bg-danger text-light',
+      delay: 2000 ,
+      autohide: true,
+      headertext: 'Error message'
+    });
+  }
+  showErrorDuplicate() {
+    this.toastService.show('DuplicatedAccount', {
+      classname: 'bg-danger text-light',
+      delay: 2000 ,
+      autohide: true,
+      headertext: 'Error message'
+    });
   }
 
   create_user(){
@@ -53,13 +111,16 @@ export class AccountRegistrationComponent implements OnInit {
     }
  
       if (this.regexp.test(this.email) == false){
-      alert("The mail does not match the format conditions ");
+      //alert("The mail does not match the format conditions ");
+      this.showErrorEmail()
       document.getElementById("email").focus();
       }else if (this.regexpphonenumber.test(this.phone_number)){
-        alert("The phone number must contain at least 10 digits")
+        //alert("The phone number must contain at least 10 digits")
+        this.showErrorNumber()
         document.getElementById("phone").focus();
       }else if (this.password != this.password_confirmation){
-        alert("Passwords do not match ");
+        //alert("Passwords do not match ");
+        this.showErrorPassMatch()
         document.getElementById("password").focus();
       }else if(this.regexppass.test(this.password) == false || this.regexppass.test(this.password_confirmation) == false){
         console.log(this.password);
@@ -67,10 +128,12 @@ export class AccountRegistrationComponent implements OnInit {
         console.log(this.regexppass.test(this.password));
         
         console.log(this.regexppass.test(this.password_confirmation));
-        alert("The format of the passwords do not match ");
+        //alert("The format of the passwords do not match ");
+        this.showErrorPassFormat()
         document.getElementById("password").focus();
       }else if(this.first_name == '' || this.middle_name == '' || this.last_name == '' || this.phone_number == '' || this.city == '' || this.state == '' || this.email == '' || this.password == '' || this.password_confirmation == ''){
-        alert("There are empty fields check your information ");
+        //alert("There are empty fields check your information ");
+        this.showErrorEmpty()
         document.getElementById("name").focus();
       }else{
         //Evething all rigth
@@ -83,9 +146,12 @@ export class AccountRegistrationComponent implements OnInit {
           let Response = JSON.stringify(res);
           let json = JSON.parse(Response)
           if (json.error_code == 'DuplicatedAccount'){
-            alert("This user account already exists")
+            //alert("This user account already exists")
+            this.showErrorDuplicate()
             document.getElementById("name").focus();
           }
+          this.page.currentPosition = '/Signin'
+          this.showSuccess()
           this.router.navigate(['/LogIn'])
         }, err =>{
           // Get error response from the API

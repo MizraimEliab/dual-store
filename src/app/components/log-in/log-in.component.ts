@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router,  NavigationEnd } from '@angular/router';
 import {LoginService} from '../../services/login.service';
+import {ToastService} from '../../services/toast.service';
+import {PagerService} from '../../services/pager.service';
+import { filter } from 'rxjs/operators';
 @Component({
   selector: 'app-log-in',
   templateUrl: './log-in.component.html',
@@ -10,10 +13,12 @@ export class LogInComponent implements OnInit {
   email:string;
   password:string;
   RequestBody:any;
+  previousUrl: string = null;
+  currentUrl: string = null;
   remember:boolean;
   regexpemail = new RegExp(/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/);
   regexppass = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/);
-  constructor(public LoginService: LoginService, public router: Router) { }
+  constructor(public page : PagerService,public toastService: ToastService,public LoginService: LoginService, public router: Router) { }
 
   ngOnInit(): void {
     
@@ -24,6 +29,7 @@ export class LogInComponent implements OnInit {
     }
     this.validate_session();
     
+
   }
 
   validate_session(){
@@ -38,6 +44,42 @@ export class LogInComponent implements OnInit {
     
   }
 
+  showSuccess() {
+    this.toastService.show('Welcome ' + localStorage.getItem('full_name'), {
+      classname: 'bg-success text-light',
+      delay: 2000 ,
+      autohide: true,
+      headertext: 'Message'
+    });
+  }
+
+  showErrorEmailFormat() {
+    this.toastService.show('Please enter a valid email format and the field cannot be empty', {
+      classname: 'bg-danger text-light',
+      delay: 2000 ,
+      autohide: true,
+      headertext: 'Error message'
+    });
+  }
+
+  showErrorPass() {
+    this.toastService.show('Please enter a valid password format and the field cannot be empty', {
+      classname: 'bg-danger text-light',
+      delay: 2000 ,
+      autohide: true,
+      headertext: 'Error message'
+    });
+  }
+
+  showErrorNotFound() {
+    this.toastService.show('EmailAndPasswordDoesNotMatch', {
+      classname: 'bg-danger text-light',
+      delay: 2000 ,
+      autohide: true,
+      headertext: 'Error message'
+    });
+  }
+
 
   login(){
     // build request body
@@ -47,9 +89,11 @@ export class LogInComponent implements OnInit {
     }
 
     if (this.email == '' ||  this.regexpemail.test(this.email) == false){
-      alert("Please enter a valid email format and the field cannot be empty ");
+      //alert("Please enter a valid email format and the field cannot be empty ");
+      this.showErrorEmailFormat()
     }else if (this.password == '' || this.regexppass.test(this.password) == false){
-      alert("Please enter a valid password format and the field cannot be empty ")
+      //alert("Please enter a valid password format and the field cannot be empty ")
+      this.showErrorPass()
       
     }else{
       this.LoginService.loginservice(JSON.parse(JSON.stringify(this.RequestBody)))
@@ -66,17 +110,30 @@ export class LogInComponent implements OnInit {
           localStorage.setItem('session_id', json.data.session_id);
           localStorage.setItem('email', json.original_request.email);
           localStorage.setItem('password', json.original_request.password);
+          //this.showSuccess()
           //this.router.navigate(['/']);
-          window.history.back();
+          if(this.page.currentPosition  === '/Signin'){
+            this.router.navigate(['/'])
+          }else{
+            window.history.back();
+          }
+          
         }else{
           localStorage.setItem('full_name', json.data.customer.full_name);
           localStorage.setItem('session_id', json.data.session_id);
+          //this.showSuccess()
           //this.router.navigate(['/']);
-          window.history.back();
+          //window.history.back();
+          if(this.page.currentPosition  === '/Signin'){
+            this.router.navigate(['/'])
+          }else{
+            window.history.back();
+          }
         }
       }else{
         if (json.error_code == 'EmailAndPasswordDoesNotMatch'){
-          alert("Email or password was not found ")
+          //alert("Email or password was not found ")
+          this.showErrorNotFound()
           document.getElementById('mail').focus()
         }
       }

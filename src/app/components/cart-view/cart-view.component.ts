@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import {SearchService} from '../../services/search.service';
 import {ProductdetailsService} from '../../services/productdetails.service';
 import {CartService} from '../../services/cart.service';
+import {SearchOtherService} from '../../services/search-other.service';
 @Component({
   selector: 'app-cart-view',
   templateUrl: './cart-view.component.html',
@@ -27,7 +28,7 @@ export class CartViewComponent implements OnInit {
   subtotal:number;
   iva:number;
   total:number;
-  constructor(public carts: CartService ,public ProductDetailsService: ProductdetailsService,public SearchService: SearchService,public router: Router) { }
+  constructor(public searchO: SearchOtherService,public carts: CartService ,public ProductDetailsService: ProductdetailsService,public SearchService: SearchService,public router: Router) { }
 
   ngOnInit(): void {
     this.validate_session()
@@ -81,21 +82,14 @@ export class CartViewComponent implements OnInit {
       }else{
         this.elements = 0
       }
-      
 
-     
-      
-      
-      
-      
-      //console.log(json.data.items);
-      //this.items.push(json.data.items)
-     // console.log(this.items[0]);
-      //this.elements = this.items[0].length
-      
-       
     });
     
+  }
+
+  getProductsO(){
+    this.searchO.wordfind = this.SearchWordd
+    this.router.navigate(['/'], { queryParams: { product: this.searchO.wordfind } });
   }
 
 

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import {SearchService} from '../../services/search.service';
 import {ProductdetailsService} from '../../services/productdetails.service';
 import {CartService} from '../../services/cart.service';
+import {SearchOtherService} from '../../services/search-other.service';
 @Component({
   selector: 'app-orders',
   templateUrl: './orders.component.html',
@@ -33,7 +34,7 @@ export class OrdersComponent implements OnInit {
   createOrder:string;
   numberOrder:string;
   ordersFound:number;
-  constructor(public carts: CartService ,public ProductDetailsService: ProductdetailsService,public SearchService: SearchService,public router: Router) { }
+  constructor(public searchO: SearchOtherService,public carts: CartService ,public ProductDetailsService: ProductdetailsService,public SearchService: SearchService,public router: Router) { }
 
   ngOnInit(): void {
     this.validate_session();
@@ -67,6 +68,12 @@ export class OrdersComponent implements OnInit {
     localStorage.removeItem('password');
     location.reload();
   }
+  
+  getProductsO(){
+    this.searchO.wordfind = this.SearchWordd
+    this.router.navigate(['/'], { queryParams: { product: this.searchO.wordfind } });
+  }
+
 
   getProducts(){
     this.array = [];

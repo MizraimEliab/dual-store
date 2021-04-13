@@ -6,6 +6,7 @@ import {SearchService} from '../../services/search.service';
 // get params by Route
 import { ActivatedRoute, Params } from '@angular/router';
 import {ToastService} from '../../services/toast.service';
+import {SearchOtherService} from '../../services/search-other.service';
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -29,7 +30,7 @@ export class ProductComponent implements OnInit {
   array: any[];
   elements:number;
   //item_id:number;
-  constructor(public toastService: ToastService,public SearchService: SearchService,private _snackBar: MatSnackBar, public ProductDetailsService: ProductdetailsService,public router: Router, private ActiveRoute: ActivatedRoute) { }
+  constructor(public searchO: SearchOtherService,public toastService: ToastService,public SearchService: SearchService,private _snackBar: MatSnackBar, public ProductDetailsService: ProductdetailsService,public router: Router, private ActiveRoute: ActivatedRoute) { }
 
   
   ngOnInit(): void {
@@ -39,35 +40,15 @@ export class ProductComponent implements OnInit {
     this.getCartDeatils();
   }
   getProducts(){
-    
-    this.array = [];
-    //this.items = [];
-    this.SearchService.getByText('http://35.167.62.109/storeutags/catalogs/items/by_text/' + this.SearchWordd)
-    .subscribe(res =>{
-      let Response = JSON.stringify(res);
-      let json = JSON.parse(Response)
- 
-      if (json.hasOwnProperty("data") == true){
-        //console.log("los items son:");
-        this.array = json.data.items
-        //console.log(this.array);
-
-      
-        this.elements = this.array.length
-        
-      }else{
-        this.elements = 0
-      }
- 
-    });
-    
+    this.searchO.wordfind = this.SearchWordd
+    this.router.navigate(['/'], { queryParams: { product: this.searchO.wordfind } });
   }
 
-  test(){
+  // test(){
+  //   this.searchO.wordfind = this.SearchWordd
+  //   this.router.navigate(['/'], { queryParams: { product: this.searchO.wordfind } });
     
-    this.router.navigate(['/'], { queryParams: { product: this.SearchWordd } });
-    
-  }
+  // }
 
   showSuccess() {
     this.toastService.show('Product added successfully', {

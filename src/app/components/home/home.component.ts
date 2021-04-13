@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import {SearchService} from '../../services/search.service';
 import {ProductdetailsService} from '../../services/productdetails.service';
+import {SearchOtherService} from '../../services/search-other.service';
+import {ToastService} from '../../services/toast.service';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -21,17 +23,35 @@ export class HomeComponent implements OnInit {
   RequestBody:any;
   array: any[];
   result:string;
-  constructor(private route: ActivatedRoute,public ProductDetailsService: ProductdetailsService, public SearchService: SearchService,public router: Router) { }
+  constructor(public toastService: ToastService,public searchO: SearchOtherService,private route: ActivatedRoute,public ProductDetailsService: ProductdetailsService, public SearchService: SearchService,public router: Router) { }
 
   ngOnInit(): void {
-    
-    
+    console.log('*************');
+    console.log(this.searchO.wordfind);
+    console.log('***************');
     this.validate_session();
     this.getCategories()
-   
-    this.getProducts(this.SearchWordd)
+    if (this.searchO.wordfind == ''){
+      console.log(' no tiene nada');
+      
+      this.getProducts(this.SearchWordd)
+    }else{
+      console.log('tiene algo');
+      
+      this.getProducts(this.searchO.wordfind)
+    }
 
     this.getCartDeatils()
+    
+  }
+
+  showSuccess() {
+    this.toastService.show('Welcome ' + localStorage.getItem('full_name'), {
+      classname: 'bg-success text-light',
+      delay: 2000 ,
+      autohide: true,
+      headertext: 'Message'
+    });
   }
 
   validate_session(){
@@ -49,6 +69,7 @@ export class HomeComponent implements OnInit {
       
        this.logOut = 'LogOut';
        this.router.navigate(['/'])
+      // this.showSuccess()
     }
     
   }
